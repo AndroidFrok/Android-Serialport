@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recy = (RecyclerView) findViewById(R.id.recyclerView);
+        recy = findViewById(R.id.recyclerView);
         spSerial = (Spinner) findViewById(R.id.sp_serial);
         edInput = (EditText) findViewById(R.id.ed_input);
         btSend = (Button) findViewById(R.id.btn_send);
@@ -248,29 +248,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (radioGroup.getCheckedRadioButtonId() == R.id.radioButton1) {
-                    if (edInput.getText().toString().length() > 0) {
-                        if (serialHelper.isOpen()) {
-                            serialHelper.sendTxt(edInput.getText().toString());
-                        } else {
-                            Toast.makeText(getBaseContext(), "串口没打开", Toast.LENGTH_SHORT).show();
-                        }
+        btSend.setOnClickListener(v -> {
+            String cmd = edInput.getText().toString();
+
+            if (radioGroup.getCheckedRadioButtonId() == R.id.radioButton1) {
+                if (cmd.length() > 0) {
+                    if (serialHelper.isOpen()) {
+                        serialHelper.sendTxt(cmd);
                     } else {
-                        Toast.makeText(getBaseContext(), "先填数据吧", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "串口没打开", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    if (edInput.getText().toString().length() > 0) {
-                        if (serialHelper.isOpen()) {
-                            serialHelper.sendHex(edInput.getText().toString());
-                        } else {
-                            Toast.makeText(getBaseContext(), "串口没打开", Toast.LENGTH_SHORT).show();
-                        }
+                    Toast.makeText(getBaseContext(), "先填数据吧", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                if (cmd.length() > 0) {
+                    if (serialHelper.isOpen()) {
+                        serialHelper.sendHex(cmd);
                     } else {
-                        Toast.makeText(getBaseContext(), "先填数据吧", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "串口没打开", Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    Toast.makeText(getBaseContext(), "先填数据吧", Toast.LENGTH_SHORT).show();
                 }
             }
         });
