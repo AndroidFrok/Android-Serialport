@@ -241,10 +241,10 @@ public class MainActivity extends AppCompatActivity {
                     serialHelper.open();
                     btOpen.setEnabled(false);
                 } catch (IOException e) {
-                    Toast.makeText(MainActivity.this, getString(R.string.tips_cannot_be_opened, e.getMessage()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "IO" + e.getLocalizedMessage() + getString(R.string.tips_cannot_be_opened, e.getMessage()), Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 } catch (SecurityException se) {
-                    Toast.makeText(MainActivity.this, getString(R.string.tips_cannot_be_opened, se.getMessage()), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, se.getLocalizedMessage() + "" + getString(R.string.tips_cannot_be_opened, se.getMessage()), Toast.LENGTH_SHORT).show();
                 }
             }
         });
