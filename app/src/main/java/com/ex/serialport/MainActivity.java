@@ -240,11 +240,9 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     serialHelper.open();
                     btOpen.setEnabled(false);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     Toast.makeText(MainActivity.this, "IO" + e.getLocalizedMessage() + getString(R.string.tips_cannot_be_opened, e.getMessage()), Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
-                } catch (SecurityException se) {
-                    Toast.makeText(MainActivity.this, se.getLocalizedMessage() + "" + getString(R.string.tips_cannot_be_opened, se.getMessage()), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -298,8 +296,7 @@ public class MainActivity extends AppCompatActivity {
 
         final EditText inputField = new EditText(this);
         InputFilter filter = new InputFilter() {
-            public CharSequence filter(CharSequence source, int start, int end,
-                                       Spanned dest, int dstart, int dend) {
+            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
                 for (int i = start; i < end; i++) {
                     if (!Character.isDigit(source.charAt(i))) {
                         return "";

@@ -1,6 +1,7 @@
 package tp.xmaihh.serialport;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,9 +38,14 @@ public abstract class SerialHelper {
         this.iBaudRate = iBaudRate;
     }
 
-    public void open()
-            throws SecurityException, IOException, InvalidParameterException {
-        this.mSerialPort = new SerialPort(new File(this.sPort), this.iBaudRate, this.stopBits, this.dataBits, this.parity, this.flowCon, this.flags);
+    public void open() throws SecurityException, IOException, InvalidParameterException {
+        try {
+            this.mSerialPort = new SerialPort(new File(this.sPort), this.iBaudRate, this.stopBits, this.dataBits, this.parity, this.flowCon, this.flags);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(null, "串口打开失败" + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+        }
         this.mOutputStream = this.mSerialPort.getOutputStream();
         this.mInputStream = this.mSerialPort.getInputStream();
         this.mReadThread = new ReadThread();
@@ -79,8 +85,7 @@ public abstract class SerialHelper {
         send(bOutArray);
     }
 
-    private class ReadThread
-            extends Thread {
+    private class ReadThread extends Thread {
         private ReadThread() {
         }
 
@@ -111,7 +116,7 @@ public abstract class SerialHelper {
 //                    }
 
                 } catch (Throwable e) {
-                     if (e.getMessage() != null) {
+                    if (e.getMessage() != null) {
                         Log.e("error", e.getMessage());
                     }
                     return;
@@ -120,8 +125,7 @@ public abstract class SerialHelper {
         }
     }
 
-    private class SendThread
-            extends Thread {
+    private class SendThread extends Thread {
         public boolean suspendFlag = true;
 
         private SendThread() {
