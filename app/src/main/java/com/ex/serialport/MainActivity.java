@@ -1,6 +1,7 @@
 package com.ex.serialport;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recy;
     private Spinner spSerial;
     private EditText edInput;
-    private Button btSend;
+    private Button btSend, btn_save;
     private RadioGroup radioGroup;
     private RadioButton radioButton1;
     private RadioButton radioButton2;
@@ -288,6 +289,42 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                save();
+            }
+        });
+    }
+
+
+    private void toasttt(String msg) {
+        Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 将串口当前的配置 传给主模块保存本地
+     */
+    private void save() {
+        Intent intent = new Intent();
+        if (serialHelper == null || !serialHelper.isOpen()) {
+            toasttt("先开启");
+            return;
+        }
+        intent.putExtra("port", serialHelper.getPort());
+        intent.putExtra("baudrate", serialHelper.getBaudRate());
+        intent.putExtra("databits", serialHelper.getDataBits());
+        intent.putExtra("parity", serialHelper.getParity());
+        intent.putExtra("stopbits", serialHelper.getStopBits());
+        intent.putExtra("flowcon", serialHelper.getFlowCon());
+        setResult(RESULT_OK, intent);
+        finish();
+
+        /**
+         *  接收代码  见 readme.md ！
+         *
+         */
     }
 
     private void showInputDialog() {

@@ -2,6 +2,37 @@
 # Android-Serialport
 移植谷歌官方串口库[android-serialport-api](https://code.google.com/archive/p/android-serialport-api/),仅支持串口名称及波特率，该项目添加支持校验位、数据位、停止位、流控配置项
 
+跳转到调试界面的起始页 接收调试界面的参数保存代码
+```
+         if (data != null) {
+                        val port = data.getStringExtra("port")
+                        val baudrate = data.getIntExtra("baudrate", 0)
+                        val databits = data.getIntExtra("databits", 0)
+                        val parity = data.getIntExtra("parity", 0)
+                        val stopbits = data.getIntExtra("stopbits", 0)
+                        val flowcon = data.getIntExtra("flowcon", 0)
+
+
+                        MmkvUtil.save(MmkvUtil.Port, port);
+                        MmkvUtil.save(MmkvUtil.Baudrate, baudrate);
+                        MmkvUtil.save(MmkvUtil.Databits, databits)
+                        MmkvUtil.save(MmkvUtil.Parity, parity)
+                        MmkvUtil.save(MmkvUtil.Stopbits, stopbits)
+                        MmkvUtil.save(MmkvUtil.Flowcon, flowcon)
+
+                        /*MmkvUtil.save(MmkvUtil.port_index, data.getIntExtra(MmkvUtil.port_index, 0))
+                        MmkvUtil.save(MmkvUtil.bote_index, data.getIntExtra(MmkvUtil.bote_index, 0))
+                        MmkvUtil.save(MmkvUtil.paruty_index, data.getIntExtra(MmkvUtil.paruty_index, 0))
+                        */
+
+                        tv_serialinfo?.text = getSerialInfo();
+
+                        TipDialog.show("保存成功")
+                    } else {
+                        TipDialog.show("串口数据空")
+                    }
+
+```
 <!--<img src="https://github.com/xmaihh/Android-Serialport/raw/master/art/compile_env.png" width="80%" height="80%" align="middle" alt="编译环境"/>-->
 <img src ="https://github.com/xmaihh/Android-Serialport/blob/master/art/logo.svg" height = 150 alt ="Android-Serialport"/>
 
