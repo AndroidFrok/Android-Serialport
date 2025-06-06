@@ -296,6 +296,11 @@ public class MainActivity extends AppCompatActivity {
                 save();
             }
         });
+
+        //   todo     默认选中 高频使用的串口信息
+        /*spSerial.setSelection(sharedPreferences.getInt(port_index, 0));
+        spParity.setSelection(sharedPreferences.getInt(paruty_index, 0));
+        spBote.setSelection(sharedPreferences.getInt(bote_index, 0));*/
     }
 
 
