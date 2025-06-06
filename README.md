@@ -2,7 +2,7 @@
 # Android-Serialport
 移植谷歌官方串口库[android-serialport-api](https://code.google.com/archive/p/android-serialport-api/),仅支持串口名称及波特率，该项目添加支持校验位、数据位、停止位、流控配置项
 
-跳转到调试界面的起始页 接收调试界面的参数保存代码
+跳转到调试界面的起始页 接收调试界面的参数保存代码（保存串口调试界面 参数  方便其他模块直接读取参数  初始化链接 ，仅限只有一个串口设备的情况，如果有 ≥2串口设备同时运行 ，则不可以这样做）
 ```
          if (data != null) {
                         val port = data.getStringExtra("port")
